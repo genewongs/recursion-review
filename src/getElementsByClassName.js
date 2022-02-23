@@ -4,7 +4,7 @@
 // };
 
 // But instead we're going to implement it from scratch:
-var getElementsByClassName = function(className, node
+var getElementsByClassName = function(className, node, result
 ) {
   // your code here
   // declare a result array, this is our return value
@@ -19,20 +19,30 @@ var getElementsByClassName = function(className, node
   //   }
   // }
   var nodeClass = node.classList;
-  console.log(node.hasChildNodes())
-
-  if(nodeClass.length >= 1 && nodeClass.contains(className)) {
-    result.push(node);
-  }
-
-  if (node.hasChildNodes()) {
-    var children = node.childNodes;
-    for (var i = 0; i < children.length; i++) {
-      result.concat(getElementsByClassName(className, children[i]))
+  // console.log(node.classList)
+  if (nodeClass !== undefined) {
+    if (nodeClass.contains(className)) {
+      result.push(node);
     }
   }
+
+
+  // if (node.hasChildNodes()) {
+  //   var children = node.childNodes;
+  //   for (var i = 0; i < children.length; i++) {
+  //     result.concat(getElementsByClassName(className, children[i]))
+  //   }
+  // }
+
+  for(let i = 0; i < node.childNodes.length; i++) {
+    var currentNode = node.childNodes[i];
+    if(currentNode.childNodes.length !== 0){
+      getElementsByClassName(className, currentNode, result);
+    }
+  }
+
   //if it has children, iterate all the children to find the classname - recursively call the function on each child
   //traverse the body if there is children
-  console.log(result);
+  // console.log(result);
   return result;
 };
